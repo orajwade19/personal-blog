@@ -1,0 +1,14 @@
+baseURL = "orajwade19.github.io"
+languageCode = "en-us"
+title = "Omkar Rajwade's Blog"
+copyright = "John Doe (CC BY 4.0)"
+theme = "hugo-bearcub"
+madeWith = "Made with [Bear Cub](https://github.com/clente/hugo-bearcub)"
+[languages]
+  [languages.en]
+    title = "Omkar Rajwade's Blog"
+    languageName = "en-US 🇺🇸"
+    LanguageCode = "en-US"
+    contentDir = "content"
+    [languages.en.params]
+      madeWith = "Made with [Bear Cub](https://github.com/clente/hugo-bearcub)"
