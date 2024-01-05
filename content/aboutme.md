@@ -27,7 +27,7 @@ Check this out: I used Python to battle aliens in "Classification of astronomica
 ## Volunteering Vibes 🌟
 Spiced things up as a Web Development Volunteer for The Apprentice Project. Cooked up a user-friendly interface that boosted traffic by 25%. 🚀
 
-Let's connect on [LinkedIn](linkedin.com/in/omkar-rajwade) and dive into the tech awesomeness together. Ready for the ride? 🚗✨
+Let's connect on [LinkedIn](https://www.linkedin.com/in/omkar-rajwade) and dive into the tech awesomeness together. Ready for the ride? 🚗✨
 
 
 

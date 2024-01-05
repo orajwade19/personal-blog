@@ -17,6 +17,6 @@ Get ready for a mix of tech tales, project highlights, and notes on various Comp
 **Why Hang Out Here?**
 This isn't your typical tech blog; it's more like a casual hangout. Whether you're a seasoned coder or just starting, there's room for everyone.
 
-So, buckle up for this tech ride! Connect with me on [LinkedIn](linkedin.com/in/omkar-rajwade) to stay updated, and let's dive into the world of tech together. 🚗✨
+So, buckle up for this tech ride! Connect with me on [LinkedIn](https://www.linkedin.com/in/omkar-rajwade) to stay updated, and let's dive into the world of tech together. 🚗✨
 
 Stay tuned for posts packed with CS notes and tech adventures. 🚀💡
