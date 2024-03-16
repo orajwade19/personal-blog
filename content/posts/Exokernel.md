@@ -1,4 +1,8 @@
-+++ title = 'Exokernel' date = 2024-03-16T12:10:07-05:00 +++
++++
+title = 'Exokernel'
+date = 2024-01-05T12:10:07-05:00
++++
+
 # Intro
 Traditional OS introduces concepts like files, memory, IPC, processes, hiding real machine information. This approach is criticized for three reasons:
 1. No domain-specific optimization possible
