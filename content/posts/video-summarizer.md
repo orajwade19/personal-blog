@@ -6,7 +6,7 @@ Imagine you have a long soccer video, and you want to get a highlight clip from 
 
 > Summarize the video --> Generate summary audio --> Get the right clips from the video, corresponding to the summary --> Stitch it all together for the final video
 
-## Summarizing the video
+## 1. Summarizing the video
  Now for generating the summary, we have a couple of options.
 1. Use a model trained on videos to directly get the description of the video
 2. Get the image frames for the video, use an image captioning model to describe all the images, and fuse together the description to "understand" the video 
@@ -27,4 +27,30 @@ While I still think this approach holds some promise, it would take significantl
 
 ---
 Option 3: Using the commentary in the video to understand the most important things in it, and using the corresponding video segments. This is the option we ended up going with. It has a key limitation - this will simply not work for a video without any dialogue or sound. We were okay with this, since we decided to focus on soccer clips, but options 1 and 2 may be the only feasible solutions if silent videos are taken into account. 
-For our use case, however, option 3 is fantastic. Instead of even depending on the actual audio, we could use Youtube's auto-generated subtitles in SRT format. This gives us both timestamp related information and the actual content in the video, in an easy-to-parse, compact format. The use of timestamps will be explained later. We collected all the content from the subtitles, and used ChatGPT to generate a summary. We then used Whisper to generate audio from the text summary, to eventually layer over the generated short video.
+For our use case, however, option 3 is fantastic. Instead of even depending on the actual audio, we could use Youtube's auto-generated subtitles in SRT format. This gives us the content in the video, in an easy-to-parse, compact format. The use of timestamps will be explained later. We collected all the content from the subtitles, and used ChatGPT to generate a summary. We then used Whisper to generate audio from the text summary, to eventually layer over the generated short video.
+
+## 2. Getting the appropriate clips
+The second problem we had to solve was - how do we get the appropriate clips which correspond to the summary? Since the image captioning approach with BLIP was not working, embedding image captions with image name metadata was not an option. After doing some research, we landed on CLIP embeddings. We used a very simple method to divide the video into images, creating two snapshots per second of the video. then, we could directly store CLIP embeddings generated from the snapshots into MongoDB, along with the associated timestamp of those snapshots. Here's what an example looks like :
+| startTimeStamp | endTimeStamp | embedding         |
+|----------------|--------------|-------------------|
+| 1s             | 1.5s         | [0.46, 0.15, ...] |
+| ...            | ...          | ...               |
+
+Once all the images are stored, we use the embedding of summary text from part 1 as a query for vector search. and retrieve 'n' documents with embeddings nearest to the query vector. We are able to use text to query images because CLIP embeddings are multimodal - they embed both images and text in the same latent space. For our scope, we just took the 50 nearest images. For a real-world solution, this number can be made dynamic, perhaps depending on the length of the video, or the target short clip length. 
+
+### 3. Putting it all together
+We now have the two pieces needed to generate a short clip :
+- summary audio
+- most relevant clips from the original video
+
+We sort the relevant clips by their timestamps, and merge all of them to create a video using ffmpeg. Then, once again using ffmpeg, we layer the generated audio on top of this video to produce the final output. We end up getting a nice clip with goals and key moments from the original soccer video!
+
+### Some relevant links
+
+**Our Code**  : https://github.com/herzo175/mongodb-apr-2024-hackathon
+
+**A different approach to solve this problem** : https://aws.amazon.com/blogs/media/video-summarization-with-aws-artificial-intelligence-ai-and-machine-learning-ml-services/
+
+**Video ML** : https://github.com/HuaizhengZhang/Awsome-Deep-Learning-for-Video-Analysis
+
+**Example video used by us** : https://www.youtube.com/watch?v=h4m68r8kWAc
