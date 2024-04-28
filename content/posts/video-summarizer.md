@@ -30,6 +30,15 @@ Option 3: Using the commentary in the video to understand the most important thi
 For our use case, however, option 3 is fantastic. Instead of even depending on the actual audio, we could use Youtube's auto-generated subtitles in SRT format. This gives us the content in the video, in an easy-to-parse, compact format. The use of timestamps will be explained later. We collected all the content from the subtitles, and used ChatGPT to generate a summary. We then used Whisper to generate audio from the text summary, to eventually layer over the generated short video.
 
 ## 2. Getting the appropriate clips
+
+### Background on embeddings:
+This post mentions embeddings - here's a short primer that chatGPT gave me after some prompting experiments : 
+Think of embeddings as the brains of our language models—they're like these super-smart representations of words that live in this magical vector space. These embeddings aren't just random numbers; they're like little capsules of meaning and context for each word. So, when our NLP models see words, they don't just see letters strung together; they see these rich, nuanced representations that help them understand language way better. It's kind of like giving our models a secret decoder ring for language! And hey, these embeddings make our models really good at things like understanding language nuances, figuring out synonyms, and even translating languages. They're pretty much the unsung heroes behind the scenes of all our favorite language-powered technologies!
+
+There's so much literature out there on embeddings. Google away!
+
+---
+
 The second problem we had to solve was - how do we get the appropriate clips which correspond to the summary? Since the image captioning approach with BLIP was not working, embedding image captions with image name metadata was not an option. After doing some research, we landed on CLIP embeddings. We used a very simple method to divide the video into images, creating two snapshots per second of the video. then, we could directly store CLIP embeddings generated from the snapshots into MongoDB, along with the associated timestamp of those snapshots. Here's what an example looks like :
 | startTimeStamp | endTimeStamp | embedding         |
 |----------------|--------------|-------------------|
