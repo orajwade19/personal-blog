@@ -39,13 +39,13 @@ There's so much literature out there on embeddings. Google away!
 
 ---
 
-The second problem we had to solve was - how do we get the appropriate clips which correspond to the summary? Since the image captioning approach with BLIP was not working, embedding image captions with image name metadata was not an option. After doing some research, we landed on CLIP embeddings. We used a very simple method to divide the video into images, creating two snapshots per second of the video. then, we could directly store CLIP embeddings generated from the snapshots into MongoDB, along with the associated timestamp of those snapshots. Here's what an example looks like :
+The second problem we had to solve was - how do we get the appropriate clips which correspond to the summary? Since the image captioning approach with BLIP was not working, embedding image captions with image name metadata was not an option. After doing some research, and discussing the issue at hand with Andriy, the founder at Nomic, we decided to use Nomic embeddings. These embeddings embed images and text in the same latent space, allowing us to "link" the two together. We used a very simple method to divide the video into images, creating two snapshots per second of the video. then, we could directly store Nomic embeddings generated from the snapshots into MongoDB, along with the associated timestamp of those snapshots. Here's what an example looks like :
 | startTimeStamp | endTimeStamp | embedding         |
 |----------------|--------------|-------------------|
 | 1s             | 1.5s         | [0.46, 0.15, ...] |
 | ...            | ...          | ...               |
 
-Once all the images are stored, we use the embedding of summary text from part 1 as a query for vector search. and retrieve 'n' documents with embeddings nearest to the query vector. We are able to use text to query images because CLIP embeddings are multimodal - they embed both images and text in the same latent space. For our scope, we just took the 50 nearest images. For a real-world solution, this number can be made dynamic, perhaps depending on the length of the video, or the target short clip length. 
+Once all the images are stored, we use the embedding of summary text from part 1 as a query for vector search. and retrieve 'n' documents with embeddings nearest to the query vector. We are able to use text to query images because Nomic embeddings are multimodal - they embed both images and text in the same latent space. For our scope, we just took the 50 nearest images. For a real-world solution, this number can be made dynamic, perhaps depending on the length of the video, or the target short clip length. 
 
 ### 3. Putting it all together
 We now have the two pieces needed to generate a short clip :
