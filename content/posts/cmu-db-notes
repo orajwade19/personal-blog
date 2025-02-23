@@ -1,0 +1,10 @@
+- p0 
+-- hard reset git
+-- C++ different ret syntax similar to python
+-- HLL, probabilistic DS (High level) 
+
+
+  - p1 
+  -- CLOCK_REALTIME vs CLOCK_MONOTONIC in Linux/Similar stuff in C++
+  -- map uses RBTree
+  -- multimap vs map of vector value
